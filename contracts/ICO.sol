@@ -15,7 +15,7 @@ import './zeppelin/SafeMath.sol';
  * on a token per ETH baseRate. Funds collected are forwarded to a wallet
  * as they arrive.
  */
-contract Crowdsale {
+contract ICO {
   using SafeMath for uint256;
 
   // The token being sold
