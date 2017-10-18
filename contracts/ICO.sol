@@ -27,7 +27,7 @@ contract ICO is Ownable{
   address public wallet;
 
   // how many token units a buyer gets per wei
-  uint256 public baseRate; // TODO set by function callable after preico is over
+  uint256 public baseRate;
 
   // amount of raised money in wei
   uint256 public weiRaised;
@@ -36,7 +36,7 @@ contract ICO is Ownable{
   uint256 public tokensIssuedIco;
 
   // Total number of  tokens for the ICO
-  uint256 constant public totalTokensIco = 1*10^9 * 10^18; // 18 decmals
+  uint256 constant public totalTokensIco = 1 * (10**9) * (10**18); // 18 decmals
 
   /**
    * Pre-ICO specific variables
@@ -56,7 +56,7 @@ contract ICO is Ownable{
   mapping (address => bool) claimedTokens;
 
   // Total number of presale tokens
-  uint256 constant public totalTokensPre = 5*10^8 * 10^18; // 18 decmals
+  uint256 constant public totalTokensPre = 5 * 10**8 * 10**18; // 18 decmals
 
   /**
    * event for token purchase logging
@@ -82,8 +82,6 @@ contract ICO is Ownable{
    * @param effectiveValue effective amount after discoutns
    */
   event WeiContributed(address indexed purchaser, address indexed beneficiary, uint256 value, uint256 effectiveValue);
-
-  event TestLog(uint256 time, address add, bool val);
 
 
   function ICO(uint256 _startTimePre, uint256 _startTimeIco, address _wallet) {
@@ -176,8 +174,6 @@ contract ICO is Ownable{
   function buyTokensIco(address _beneficiary) internal {
     require(_beneficiary != 0x0);
 
-    // require(validPurchaseIco());
-
     // calculate token amount to be created
     uint256 weiAmount = msg.value;
     uint256 rate = getRateIco();
@@ -199,8 +195,7 @@ contract ICO is Ownable{
   }
 
   function buyTokensPre(address _beneficiary) internal {
-    // TestLog(now, _beneficiary, true);
-    // require(validPurchasePre());
+    require(_beneficiary != 0x0);
 
     // calculate contribution
     uint256 weiAmount = msg.value;
@@ -221,7 +216,7 @@ contract ICO is Ownable{
 
   // used to claim tokens once preico ends
   function claimTokens() public {
-    require(now > endTimePre);
+    require(hasEndedPre());
     require(!claimedTokens[msg.sender]);
 
     uint256 tokensPerWei = tokenValue();
