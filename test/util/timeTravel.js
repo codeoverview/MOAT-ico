@@ -20,7 +20,7 @@ const timeJump = function (time) {
 
 async function timeTravel (time) {
   await timeJump(time)
-  await mineBlock()
+  await mineBlock(1)
   return true
 }
 
