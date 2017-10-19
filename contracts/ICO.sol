@@ -36,7 +36,7 @@ contract ICO is Ownable{
   uint256 public tokensIssuedIco;
 
   // Total number of  tokens for the ICO
-  uint256 constant public totalTokensIco = 1 * (10**9) * (10**18); // 18 decmals
+  uint256 constant public totalTokensIco = 125 * (10**7) * (10**18); // 18 decmals
 
   /**
    * Pre-ICO specific variables
@@ -56,7 +56,7 @@ contract ICO is Ownable{
   mapping (address => bool) claimedTokens;
 
   // Total number of presale tokens
-  uint256 constant public totalTokensPre = 5 * 10**8 * 10**18; // 18 decmals
+  uint256 constant public totalTokensPre = 25 * 10**7 * 10**18; // 18 decmals
 
   /**
    * event for token purchase logging

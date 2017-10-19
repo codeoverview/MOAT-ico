@@ -150,14 +150,14 @@ contract('ICO', async function (accounts) {
     let balance5 = await token.balanceOf(accounts[5])
     let balance6 = await token.balanceOf(accounts[6])
 
-    assert.equal(await cs.tokenValue(), 4761904, 'Wrong pre-ico token value calculated')
+    assert.equal(await cs.tokenValue(), 2380952, 'Wrong pre-ico token value calculated')
 
-    assert.equal(balance1.toNumber(), contrib1.toNumber() * 4761904, 'User claimed wrong amount of tokens')
-    assert.equal(balance2.toNumber(), contrib2.toNumber() * 4761904, 'User claimed wrong amount of tokens')
-    assert.equal(balance3.toNumber(), contrib3.toNumber() * 4761904, 'User claimed wrong amount of tokens')
-    assert.equal(balance4.toNumber(), contrib4.toNumber() * 4761904, 'User claimed wrong amount of tokens')
-    assert.equal(balance5.toNumber(), contrib5.toNumber() * 4761904, 'User claimed wrong amount of tokens')
-    assert.equal(balance6.toNumber(), contrib6.toNumber() * 4761904, 'User claimed wrong amount of tokens')
+    assert.equal(balance1.toNumber(), contrib1.toNumber() * 2380952, 'User claimed wrong amount of tokens')
+    assert.equal(balance2.toNumber(), contrib2.toNumber() * 2380952, 'User claimed wrong amount of tokens')
+    assert.equal(balance3.toNumber(), contrib3.toNumber() * 2380952, 'User claimed wrong amount of tokens')
+    assert.equal(balance4.toNumber(), contrib4.toNumber() * 2380952, 'User claimed wrong amount of tokens')
+    assert.equal(balance5.toNumber(), contrib5.toNumber() * 2380952, 'User claimed wrong amount of tokens')
+    assert.equal(balance6.toNumber(), contrib6.toNumber() * 2380952, 'User claimed wrong amount of tokens')
     assert.equal(balance1.toNumber(), balance5.toNumber() * 1.25, 'User did not get the correct relative amount of tokens')
   })
 
@@ -234,12 +234,12 @@ contract('ICO', async function (accounts) {
     await cs.claimTokens({from: accounts[1]})
     await cs.claimTokens({from: accounts[2]})
 
-    assert.equal(await cs.tokenValue(), 12820512, 'Wrong pre-ico token value calculated')
+    assert.equal((await cs.tokenValue()).toNumber(), 6410256, 'Wrong pre-ico token value calculated')
 
     let claimedBalance1 = await token.balanceOf(accounts[1])
     let claimedBalance2 = await token.balanceOf(accounts[2])
 
-    assert.approximately(claimedBalance1.toNumber(), contrib1.toNumber() * 12820512 + balance1.toNumber(), claimedBalance2.toNumber() * 0.001, 'Balance wrong after claiming')
-    assert.approximately(claimedBalance2.toNumber(), contrib2.toNumber() * 12820512 + balance2.toNumber(), claimedBalance2.toNumber() * 0.001, 'Balance wrong after claiming')
+    assert.approximately(claimedBalance1.toNumber(), contrib1.toNumber() * 6410256 + balance1.toNumber(), claimedBalance2.toNumber() * 0.001, 'Balance wrong after claiming')
+    assert.approximately(claimedBalance2.toNumber(), contrib2.toNumber() * 6410256 + balance2.toNumber(), claimedBalance2.toNumber() * 0.001, 'Balance wrong after claiming')
   })
 })
