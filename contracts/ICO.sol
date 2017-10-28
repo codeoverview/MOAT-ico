@@ -152,7 +152,7 @@ contract ICO is Ownable{
     } else if (now - startTimeIco < 25 days){
       return baseRate * 100 / 140;
     } else if (now - startTimeIco < 30 days){
-      return baseRate * 100 / 155;
+      return baseRate * 100 / 160;
     } else {
       return 0;
     }
