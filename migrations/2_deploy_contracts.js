@@ -6,5 +6,5 @@ const curTime = Date.now() / 1000 | 0
 
 module.exports = function (deployer) {
   // deployer.deploy(ConvertLib)
-  // deployer.deploy(ICO, curTime+200, curTime + (60 * 60 * 24 * 3), '0x1') // TODO replace 0x1 with real wallet address
+  deployer.deploy(ICO, curTime + 300, curTime + (60 * 60 * 24 * 12) + 300, 0x2E254e8f64F9e5e6a88509a84328077B08DC9E32) // TODO replace 0x1 with real wallet address
 }
