@@ -195,7 +195,7 @@ contract('ICO', async function (accounts) {
     assert.equal(balance3.toNumber(), 830 * 10 ** 18, 'Balance from ico partcipation wrong amount')
     assert.equal(balance4.toNumber(), 760 * 10 ** 18, 'Balance from ico partcipation wrong amount')
     assert.equal(balance5.toNumber(), 710 * 10 ** 18, 'Balance from ico partcipation wrong amount')
-    assert.equal(balance6.toNumber(), 640 * 10 ** 18, 'Balance from ico partcipation wrong amount')
+    assert.equal(balance6.toNumber(), 620 * 10 ** 18, 'Balance from ico partcipation wrong amount')
   })
 
   it('Correct mixed calculation and distribution', async function () {
