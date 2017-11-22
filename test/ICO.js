@@ -33,21 +33,21 @@ contract('ICO', async function (accounts) {
     let cs = await ICO.new(curTime + 20, curTime + days12 + 300, accounts[0], {from: accounts[0]})
     let token = Token.at(await cs.token())
 
-    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 1000})
+    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 10 * 10 ** 18})
     let baseContrib = await cs.contributions(accounts[1])
     assert.equal(baseContrib, 0, 'Contribution preico worked before start')
 
     await timeTravel(100)
 
-    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 1000, gas: 400000})
+    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 10 * 10 ** 18, gas: 400000})
     let allowedContrib = await cs.contributions(accounts[1])
-    assert.equal(allowedContrib.toNumber(), 2000, 'Contribution preico wrong amount')
+    assert.equal(allowedContrib.toNumber(), 20 * 10 ** 18, 'Contribution preico wrong amount')
 
     await timeTravel(days12)
 
-    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 1000, gas: 400000})
+    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 10 * 10 ** 18, gas: 400000})
     let intervalContrib = await cs.contributions(accounts[1])
-    assert.equal(intervalContrib.toNumber(), 2000, 'Contribution preico was allowed after it ended')
+    assert.equal(intervalContrib.toNumber(), 20 * 10 ** 18, 'Contribution preico was allowed after it ended')
 
     assertFail(async () => {
       await cs.setBaseRate(100, {from: accounts[1]})
@@ -56,17 +56,17 @@ contract('ICO', async function (accounts) {
 
     await timeTravel(300)
 
-    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 1000, gas: 400000})
+    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 10 * 10 ** 18, gas: 400000})
     let postContrib = await cs.contributions(accounts[1])
     let icoBalance = await token.balanceOf(accounts[1])
-    assert.equal(postContrib.toNumber(), 2000, 'Contribution preico was allowed after it ended once ico started')
-    assert.equal(icoBalance.toNumber(), 100000, 'Did not receive tokens for contributing to ico')
+    assert.equal(postContrib.toNumber(), 20 * 10 ** 18, 'Contribution preico was allowed after it ended once ico started')
+    assert.equal(icoBalance.toNumber(), 10 * 10 ** 20, 'Did not receive tokens for contributing to ico')
 
     await timeTravel(days30)
 
-    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 1000, gas: 400000})
+    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 10 * 10 ** 18, gas: 400000})
     let blockedTokenBuy = await token.balanceOf(accounts[1])
-    assert.equal(blockedTokenBuy.toNumber(), 100000, 'Bought tokens after ICO end')
+    assert.equal(blockedTokenBuy.toNumber(), 10 * 10 ** 20, 'Bought tokens after ICO end')
   })
 
   it('Transfers blocked until tokens are released', async function () {
@@ -80,7 +80,7 @@ contract('ICO', async function (accounts) {
     await cs.setBaseRate(100, {from: accounts[0]})
     await timeTravel(300)
 
-    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 1000, gas: 400000})
+    await web3.eth.sendTransaction({from: accounts[1], to: cs.address, value: 10 * 10 ** 18, gas: 400000})
     let icoBalance = await token.balanceOf(accounts[1])
 
     await timeTravel(days30)

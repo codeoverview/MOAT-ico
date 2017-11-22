@@ -19,6 +19,7 @@ contract ICO is Ownable {
 
     // The token being sold
     Token public token;
+    uint public MINIMUMCONTIB = 0.01 ether;
 
     // start and end timestamps where investments are allowed (both inclusive) ICO
     uint256 public startTimeIco;
@@ -43,7 +44,7 @@ contract ICO is Ownable {
     * Pre-ICO specific variables
     */
 
-  // start and end timestamps where investments are allowed (both inclusive) PreIco
+    // start and end timestamps where investments are allowed (both inclusive) PreIco
     uint256 public startTimePre;
     uint256 public endTimePre;
 
@@ -96,8 +97,11 @@ contract ICO is Ownable {
         endTimePre = _startTimePre + 12 days;
         wallet = _wallet;
 
-        token.mint(0x8Faa64B6b2eD30290554128289f3A6De9A97D8F6, 4900000000);
+        token.mint(0x8Faa64B6b2eD30290554128289f3A6De9A97D8F6, 4675000000);
+        token.mint(0x2ef6aB856a6be9220A0Cf3Be798b3E05fA29267F, 225000000);
         token.mint(0xe84f002ED596E38D7f1cE048503b13321eb28A98, 300000000);
+
+
         token.mint(0xB4EB582b0055d9f8B8ad862292cA1b33dfE8215C, 100000000);
         token.mint(0xd6f13F05DBB959f8DAA6721a088906Fef4Ad093c, 500000000);
         token.mint(0x220Ea3406b1b9d72B6386EA29EfF73a230D5d51c, 700000000);
@@ -107,6 +111,7 @@ contract ICO is Ownable {
 
     // fallback function can be used to buy tokens or participate in pre-ico
     function () public payable {
+        require(msg.value >= MINIMUMCONTIB);
         if (validPurchasePre()) {
             buyTokensPre(msg.sender);
         } else if (validPurchaseIco()) {
@@ -182,6 +187,11 @@ contract ICO is Ownable {
         }
     }  
 
+    // Get the calculated value of a token for Pre-ICO
+    function tokenValue() public constant returns (uint256 tokensPerWei) {
+        tokensPerWei = TOTAL_TOKENS_PRE / totalContributions;
+    }
+
     // low level token purchase function
     function buyTokensIco(address _beneficiary) internal {
         require(_beneficiary != 0x0);
@@ -226,10 +236,6 @@ contract ICO is Ownable {
         forwardFunds();
     }
 
-    // Get the calculated value of a token for Pre-ICO
-    function tokenValue() internal constant returns (uint256 tokensPerWei) {
-        tokensPerWei = TOTAL_TOKENS_PRE / totalContributions;
-    }
 
     // send ether to the fund collection wallet
     // override to create custom fund forwarding mechanisms
