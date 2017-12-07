@@ -124,7 +124,7 @@ contract ICO is Ownable {
         } else if (validPurchaseIco()) {
             buyTokensIco(msg.sender);
         } else {
-            return;
+            require(false);
         }
     }
 
