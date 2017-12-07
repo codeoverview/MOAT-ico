@@ -1,4 +1,4 @@
-pragma solidity 0.4.15;
+pragma solidity 0.4.18;
 
 import "./Token.sol";
 import "./zeppelin/SafeMath.sol";
@@ -85,15 +85,15 @@ contract ICO is Ownable {
       */
     event WeiContributed(address indexed purchaser, address indexed beneficiary, uint256 value, uint256 effectiveValue);
 
-    function ICO(uint256 _startTimePre, uint256 _startTimeIco, address _wallet) public {
+    function ICO(uint256 _startTimePre, address _wallet) public {
         require(_startTimePre >= block.timestamp);
-        require(_startTimeIco >= _startTimePre);
+        // require(_startTimeIco >= _startTimePre);
         require(_wallet != 0x0);
 
         token = createTokenContract();
-        startTimeIco = _startTimeIco;
+        startTimeIco = 0;
         startTimePre = _startTimePre;
-        endTimeIco = _startTimeIco + 30 days;
+        endTimeIco = 0;
         endTimePre = _startTimePre + 12 days;
         wallet = _wallet;
 
@@ -107,6 +107,13 @@ contract ICO is Ownable {
         token.mint(0x220Ea3406b1b9d72B6386EA29EfF73a230D5d51c, 700000000);
         token.mint(0x87969413c2388B23c2ac871a61702d1b2d67b9CB, 2000000000);
         token.pause(); // Unpause after ICO is over
+    }
+
+    function setICOStart(uint256 _startTimeIco) public onlyOwner {
+        require(_startTimeIco!=0);
+        require(startTimeIco==0);
+        startTimeIco = _startTimeIco;
+        endTimeIco = _startTimeIco + 30 days;
     }
 
     // fallback function can be used to buy tokens or participate in pre-ico
